@@ -1,12 +1,20 @@
 import { Component } from "react"
+import { connect } from "react-redux";
+import { decrementCounter, incrementCounter } from "../redux/actions/counter_actions";
 
 interface Home {
   counter:number
 }
 
-export default class App extends Component<Home>{
+type CounterReducer = {
+  value:number
+}
+
+class App extends Component<Home>{
 
  state: Home;
+
+ static getInitialProps({store}) {}
 
   constructor(props: Home){
     super(props);
@@ -28,13 +36,24 @@ export default class App extends Component<Home>{
   }
 
   render = () => {
-    console.log("rerender")
+ 
     return (
       <div>
-        <h1>{this.state.counter}</h1>
-        <button onClick={this.increase}>Increase</button>
-        <button onClick={this.decrease}>Decrease</button>
+        <h1>{this.props.counter}</h1>
+        <button onClick={this.props.incrementCounter}>Increase</button>
+        <button onClick={this.props.decrementCounter}>Decrease</button>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: { counter: { value: any; }; }) => ({
+  counter:state.counter.value
+})
+
+const mapDispatchToProps = {
+  incrementCounter,
+  decrementCounter
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

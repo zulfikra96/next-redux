@@ -1,8 +1,7 @@
 import '../styles/globals.css'
 import App from 'next/app'
-import { Provider } from 'react-redux';
 import  { wrapper } from '../redux/store';
-import withRedux from "next-redux-wrapper";
+
 
 class MyApp extends App{
 
